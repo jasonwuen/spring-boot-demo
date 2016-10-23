@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+        http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+    <dubbo:application name="demo-consumer" owner="programmer" organization="dubbox" logger="slf4j"/>
+
+    <dubbo:registry protocol="zookeeper" address="10.211.55.6:2181" file="false" client="curator" group="dev"/>
+
+    <!-- 远程服务调用超时时间(毫秒) -->
+    <dubbo:consumer timeout="30000" retries="0" check="false" loadbalance="random" validation="true" />
+
+    <dubbo:annotation package="cn.net.wujun.test.demo.facade"/>
+
+    <!--<context:component-scan base-package="cn.net.wujun.test.demo.facade" />-->
+
+    <dubbo:reference interface="cn.net.wujun.demo.facade.UserRestService" id="userRestService"/>
+
+</beans>
